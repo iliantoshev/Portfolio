@@ -952,7 +952,7 @@ document.querySelector('.form-btn').addEventListener('click',async function(){
       body:JSON.stringify({name:name.value,contact:contact.value,business:business.value,message:message.value})
     });
     if(res.ok){
-      this.textContent='✓ Изпрати ✓';
+      this.textContent='✓ Очакайте отговор ✓';
       this.style.background='#00c263';
       inputs.forEach(i=>i.value='');
     }else{
