@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DaGoTa – Премиум Уеб Дизайн</title>
+<meta name="description" content="DaGoTa (Илиян Тошев) – Създавам уебсайтове, които превръщат бизнесите в разпознаваеми и доверени марки.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080a08;
+  --bg2:#0d0f0d;
+  --bg3:#111411;
+  --green:#00e87a;
+  --green2:#00c263;
+  --green-dim:rgba(0,232,122,0.12);
+  --green-glow:rgba(0,232,122,0.25);
+  --text:#e8ede8;
+  --text2:#8a9a8a;
+  --text3:#4a5a4a;
+  --border:rgba(0,232,122,0.12);
+  --border2:rgba(255,255,255,0.07);
+  --glass:rgba(255,255,255,0.03);
+  --glass2:rgba(0,232,122,0.06);
+  --r:12px;
+  --r2:20px;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  font-size:16px;
+  line-height:1.7;
+  overflow-x:hidden;
+  cursor:none;
+}
+/* Custom cursor */
+.cursor{
+  position:fixed;width:10px;height:10px;
+  background:var(--green);border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:transform 0.1s,width 0.2s,height 0.2s,opacity 0.2s;
+  mix-blend-mode:screen;
+}
+.cursor-trail{
+  position:fixed;width:32px;height:32px;
+  border:1px solid rgba(0,232,122,0.4);border-radius:50%;
+  pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:transform 0.3s cubic-bezier(.17,.67,.83,.67),opacity 0.3s;
+}
+body:has(a:hover) .cursor,.cursor:hover{width:20px;height:20px}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--green2);border-radius:2px}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:20px 5vw;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(8,10,8,0.8);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:padding 0.3s;
+}
+nav.scrolled{padding:14px 5vw}
+.logo{
+  font-family:'Syne',sans-serif;
+  font-weight:800;font-size:1.5rem;
+  color:#fff;letter-spacing:-0.02em;
+}
+.logo span{color:var(--green)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{
+  color:var(--text2);font-size:0.875rem;
+  text-decoration:none;font-weight:500;
+  transition:color 0.2s;letter-spacing:0.02em;
+}
+.nav-links a:hover{color:var(--green)}
+.nav-cta{
+  background:var(--green);color:#000;
+  padding:8px 20px;border-radius:6px;
+  font-weight:600;font-size:0.875rem;
+  text-decoration:none;letter-spacing:0.02em;
+  transition:opacity 0.2s,transform 0.2s;
+}
+.nav-cta:hover{opacity:0.85;transform:translateY(-1px)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:none;background:none;border:none;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text2);transition:0.3s}
+.mobile-menu{display:none}
+
+/* HERO */
+#hero{
+  min-height:100vh;
+  display:flex;align-items:center;
+  padding:120px 5vw 80px;
+  position:relative;overflow:hidden;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(0,232,122,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,232,122,0.04) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 80% 60% at 50% 50%,black 40%,transparent 100%);
+}
+.hero-glow{
+  position:absolute;
+  width:600px;height:600px;
+  background:radial-gradient(ellipse,rgba(0,232,122,0.08) 0%,transparent 70%);
+  top:-100px;right:-100px;pointer-events:none;
+}
+.hero-glow2{
+  position:absolute;
+  width:400px;height:400px;
+  background:radial-gradient(ellipse,rgba(0,232,122,0.05) 0%,transparent 70%);
+  bottom:-50px;left:10%;pointer-events:none;
+}
+.hero-content{max-width:800px;position:relative;z-index:1}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--glass2);border:1px solid var(--border);
+  padding:6px 14px;border-radius:100px;
+  font-size:0.8rem;color:var(--green);
+  font-weight:500;letter-spacing:0.05em;text-transform:uppercase;
+  margin-bottom:2rem;
+  animation:fadeUp 0.8s ease both;
+}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+h1{
+  font-family:'Syne',sans-serif;
+  font-weight:800;
+  font-size:clamp(2.4rem,5.5vw,4.2rem);
+  line-height:1.1;letter-spacing:-0.03em;
+  color:#fff;margin-bottom:1.5rem;
+  animation:fadeUp 0.8s 0.1s ease both;
+}
+h1 em{font-style:normal;color:var(--green)}
+.hero-sub{
+  font-size:clamp(1rem,1.8vw,1.15rem);
+  color:var(--text2);max-width:580px;
+  line-height:1.7;margin-bottom:2.5rem;
+  animation:fadeUp 0.8s 0.2s ease both;
+}
+.hero-btns{
+  display:flex;gap:1rem;flex-wrap:wrap;
+  animation:fadeUp 0.8s 0.3s ease both;
+}
+.btn-primary{
+  background:var(--green);color:#000;
+  padding:14px 28px;border-radius:8px;
+  font-weight:700;font-size:0.9rem;
+  text-decoration:none;letter-spacing:0.02em;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:transform 0.2s,box-shadow 0.2s;
+  box-shadow:0 0 0 rgba(0,232,122,0);
+}
+.btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 30px rgba(0,232,122,0.3);
+}
+.btn-secondary{
+  background:transparent;color:var(--text);
+  padding:14px 28px;border-radius:8px;
+  font-weight:600;font-size:0.9rem;
+  text-decoration:none;letter-spacing:0.02em;
+  border:1px solid var(--border2);
+  display:inline-flex;align-items:center;gap:8px;
+  transition:border-color 0.2s,color 0.2s,background 0.2s;
+}
+.btn-secondary:hover{border-color:var(--border);color:var(--green);background:var(--glass2)}
+.hero-stats{
+  display:flex;gap:2.5rem;margin-top:3.5rem;
+  padding-top:2.5rem;border-top:1px solid var(--border2);
+  animation:fadeUp 0.8s 0.4s ease both;
+  flex-wrap:wrap;
+}
+.stat-item .num{
+  font-family:'Syne',sans-serif;
+  font-weight:800;font-size:1.8rem;color:#fff;
+  letter-spacing:-0.02em;
+}
+.stat-item .num span{color:var(--green)}
+.stat-item .label{font-size:0.8rem;color:var(--text2);margin-top:2px}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* SECTIONS */
+section{padding:100px 5vw}
+.section-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:0.75rem;color:var(--green);
+  font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+  margin-bottom:1rem;
+}
+.section-tag::before{content:'';width:20px;height:1px;background:var(--green)}
+.section-title{
+  font-family:'Syne',sans-serif;
+  font-weight:800;font-size:clamp(1.8rem,3.5vw,2.8rem);
+  line-height:1.15;letter-spacing:-0.025em;color:#fff;
+  margin-bottom:1.5rem;
+}
+.section-sub{font-size:1.05rem;color:var(--text2);max-width:500px;line-height:1.7}
+
+/* ABOUT */
+#about{background:var(--bg2)}
+.about-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:5vw;align-items:center;margin-top:4rem;
+}
+.about-visual{
+  position:relative;
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:var(--r2);
+  padding:3rem;
+  overflow:hidden;
+}
+.about-visual::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at top right,rgba(0,232,122,0.08),transparent 60%);
+}
+.av-name{
+  font-family:'Syne',sans-serif;
+  font-weight:800;font-size:3rem;color:#fff;
+  letter-spacing:-0.03em;line-height:1;
+}
+.av-name span{color:var(--green)}
+.av-role{color:var(--text2);font-size:0.9rem;margin-top:8px;letter-spacing:0.05em;text-transform:uppercase}
+.av-divider{width:40px;height:2px;background:var(--green);margin:24px 0}
+.av-desc{color:var(--text2);font-size:0.95rem;line-height:1.7}
+.about-points{display:flex;flex-direction:column;gap:1.2rem}
+.about-point{
+  display:flex;gap:1rem;align-items:flex-start;
+  background:var(--glass);border:1px solid var(--border2);
+  border-radius:var(--r);padding:1.2rem 1.4rem;
+  transition:border-color 0.2s,background 0.2s;
+}
+.about-point:hover{border-color:var(--border);background:var(--glass2)}
+.point-icon{
+  width:36px;height:36px;min-width:36px;
+  background:var(--green-dim);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;
+}
+.point-title{font-weight:600;font-size:0.95rem;color:#fff;margin-bottom:3px}
+.point-desc{font-size:0.85rem;color:var(--text2)}
+
+/* WHAT YOU GET */
+.services-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:1.5px;
+  border:1.5px solid var(--border);
+  border-radius:var(--r2);
+  overflow:hidden;
+  margin-top:4rem;
+}
+.service-card{
+  background:var(--bg3);
+  padding:2rem 2.2rem;
+  position:relative;overflow:hidden;
+  transition:background 0.3s;
+}
+.service-card::before{
+  content:'';position:absolute;
+  inset:0;opacity:0;
+  background:linear-gradient(135deg,var(--green-dim),transparent);
+  transition:opacity 0.3s;
+}
+.service-card:hover{background:var(--bg2)}
+.service-card:hover::before{opacity:1}
+.sc-icon{
+  width:44px;height:44px;
+  background:var(--green-dim);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;margin-bottom:1.2rem;
+  position:relative;
+}
+.sc-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;color:#fff;margin-bottom:0.5rem}
+.sc-desc{font-size:0.875rem;color:var(--text2);line-height:1.6}
+
+/* PROCESS */
+#process{background:var(--bg2)}
+.process-list{
+  max-width:700px;margin:4rem auto 0;
+  position:relative;
+}
+.process-list::before{
+  content:'';position:absolute;
+  left:22px;top:0;bottom:0;width:1px;
+  background:linear-gradient(to bottom,var(--green),transparent);
+}
+.process-step{
+  display:flex;gap:2rem;margin-bottom:2.5rem;
+  position:relative;
+}
+.ps-num{
+  min-width:44px;height:44px;
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:0.85rem;color:var(--green);
+  position:relative;z-index:1;
+  transition:background 0.3s,border-color 0.3s;
+}
+.process-step:hover .ps-num{background:var(--green-dim);border-color:var(--green)}
+.ps-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;color:#fff;margin-bottom:4px}
+.ps-desc{font-size:0.875rem;color:var(--text2);line-height:1.6}
+
+/* PORTFOLIO */
+.portfolio-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:1.5rem;margin-top:4rem;
+}
+.project-card{
+  background:var(--bg3);
+  border:1px solid var(--border2);
+  border-radius:var(--r2);overflow:hidden;
+  transition:border-color 0.3s,transform 0.3s;
+  cursor:none;
+}
+.project-card:hover{
+  border-color:var(--border);
+  transform:translateY(-4px);
+}
+.pc-visual{
+  height:200px;
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.pc-visual::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 50%,var(--bg3));
+}
+.pc-tag{
+  position:absolute;top:14px;left:14px;z-index:2;
+  background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);
+  border:1px solid var(--border);
+  padding:4px 12px;border-radius:100px;
+  font-size:0.75rem;color:var(--green);font-weight:500;
+  letter-spacing:0.05em;text-transform:uppercase;
+}
+.pc-body{padding:1.5rem 1.8rem 1.8rem}
+.pc-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;color:#fff;margin-bottom:6px}
+.pc-desc{font-size:0.875rem;color:var(--text2);line-height:1.6;margin-bottom:1rem}
+.pc-link{
+  font-size:0.8rem;color:var(--green);font-weight:600;
+  letter-spacing:0.05em;text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:6px;
+  text-decoration:none;opacity:0;
+  transition:opacity 0.2s;
+}
+.project-card:hover .pc-link{opacity:1}
+
+/* Project visuals */
+.pv-fitness{background:linear-gradient(135deg,#0d1a0f 0%,#1a2e1a 100%)}
+.pv-resto{background:linear-gradient(135deg,#1a0d08 0%,#2e1810 100%)}
+.pv-auto{background:linear-gradient(135deg,#0a0e18 0%,#131c30 100%)}
+.pv-estate{background:linear-gradient(135deg,#0d0d18 0%,#1a1a2e 100%)}
+
+.pv-inner{
+  position:relative;z-index:1;
+  width:80%;max-width:240px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:10px;padding:16px;
+  backdrop-filter:blur(4px);
+}
+.pvi-bar{height:4px;border-radius:2px;margin-bottom:10px}
+.pvi-row{height:8px;border-radius:2px;margin-bottom:6px;opacity:0.4}
+.pvi-row.short{width:60%}
+.pvi-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
+.pvi-block{height:36px;border-radius:6px;opacity:0.3}
+
+/* WHY */
+#why{background:var(--bg2)}
+.why-inner{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:var(--r2);
+  padding:4rem;
+  position:relative;overflow:hidden;
+  text-align:center;
+  margin-top:4rem;
+}
+.why-inner::before{
+  content:'';position:absolute;
+  inset:-100px;
+  background:radial-gradient(ellipse at center,rgba(0,232,122,0.06) 0%,transparent 60%);
+}
+.why-quote{
+  font-family:'Syne',sans-serif;
+  font-weight:700;font-size:clamp(1.2rem,2.5vw,1.6rem);
+  color:#fff;line-height:1.4;max-width:600px;
+  margin:0 auto 3rem;position:relative;
+}
+.why-quote em{font-style:normal;color:var(--green)}
+.stats-row{
+  display:flex;justify-content:center;gap:4rem;
+  flex-wrap:wrap;position:relative;
+}
+.stat-block{text-align:center}
+.sb-num{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:3rem;color:var(--green);letter-spacing:-0.03em;line-height:1;
+}
+.sb-label{font-size:0.875rem;color:var(--text2);margin-top:6px;max-width:120px}
+.sb-desc{font-size:0.75rem;color:var(--text3);margin-top:3px}
+
+/* CONTACT */
+#contact{padding-bottom:120px}
+.contact-grid{
+  display:grid;grid-template-columns:1fr 1.2fr;
+  gap:5vw;align-items:start;margin-top:4rem;
+}
+.contact-info{display:flex;flex-direction:column;gap:1.5rem}
+.ci-item{
+  display:flex;gap:1rem;align-items:center;
+  background:var(--glass);border:1px solid var(--border2);
+  border-radius:var(--r);padding:1rem 1.4rem;
+  transition:border-color 0.2s;
+}
+.ci-item:hover{border-color:var(--border)}
+.ci-icon{
+  width:38px;height:38px;min-width:38px;
+  background:var(--green-dim);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;
+}
+.ci-label{font-size:0.75rem;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:2px}
+.ci-value{font-weight:600;color:#fff;font-size:0.95rem}
+.contact-form{
+  background:var(--bg3);border:1px solid var(--border2);
+  border-radius:var(--r2);padding:2.5rem;
+}
+.form-group{margin-bottom:1.2rem}
+.form-label{display:block;font-size:0.8rem;color:var(--text2);margin-bottom:6px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase}
+.form-input,.form-textarea{
+  width:100%;background:var(--bg2);
+  border:1px solid var(--border2);
+  border-radius:8px;padding:12px 16px;
+  color:var(--text);font-family:'DM Sans',sans-serif;
+  font-size:0.95rem;outline:none;
+  transition:border-color 0.2s;resize:none;
+  -webkit-appearance:none;
+}
+.form-input:focus,.form-textarea:focus{border-color:var(--green)}
+.form-textarea{height:120px;line-height:1.6}
+.form-btn{
+  width:100%;background:var(--green);color:#000;
+  border:none;padding:14px;border-radius:8px;
+  font-family:'Syne',sans-serif;font-weight:700;
+  font-size:0.95rem;letter-spacing:0.02em;
+  cursor:none;transition:opacity 0.2s,transform 0.2s;
+  margin-top:0.5rem;
+}
+.form-btn:hover{opacity:0.85;transform:translateY(-1px)}
+
+/* FOOTER */
+footer{
+  border-top:1px solid var(--border2);
+  padding:2rem 5vw;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;
+}
+.footer-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:#fff}
+.footer-logo span{color:var(--green)}
+.footer-copy{font-size:0.8rem;color:var(--text3)}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-size:0.8rem;color:var(--text2);text-decoration:none;transition:color 0.2s}
+.footer-links a:hover{color:var(--green)}
+
+/* REVEAL ANIMATION */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .about-grid,.contact-grid{grid-template-columns:1fr}
+  .portfolio-grid{grid-template-columns:1fr}
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:flex}
+  .mobile-menu{
+    display:none;position:fixed;inset:0;
+    background:rgba(8,10,8,0.97);backdrop-filter:blur(20px);
+    z-index:200;flex-direction:column;
+    align-items:center;justify-content:center;gap:2rem;
+  }
+  .mobile-menu.open{display:flex}
+  .mobile-menu a{
+    font-family:'Syne',sans-serif;font-weight:700;
+    font-size:2rem;color:#fff;text-decoration:none;
+    transition:color 0.2s;
+  }
+  .mobile-menu a:hover{color:var(--green)}
+  .mobile-close{
+    position:absolute;top:24px;right:5vw;
+    background:none;border:none;color:var(--text2);
+    font-size:1.5rem;cursor:none;
+  }
+}
+@media(max-width:600px){
+  .services-grid{grid-template-columns:1fr}
+  .stats-row{gap:2rem}
+  .why-inner{padding:2.5rem 1.5rem}
+  .contact-form{padding:1.5rem}
+  .hero-stats{gap:1.5rem}
+  #hero{padding:100px 5vw 60px}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+
+<nav id="navbar">
+  <a href="#" class="logo">Da<span>Go</span>Ta</a>
+  <ul class="nav-links">
+    <li><a href="#about">За мен</a></li>
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#portfolio">Проекти</a></li>
+    <li><a href="#contact">Контакт</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Стартирай проект →</a>
+  <button class="hamburger" aria-label="Меню" onclick="document.querySelector('.mobile-menu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu">
+  <button class="mobile-close" onclick="document.querySelector('.mobile-menu').classList.remove('open')">✕</button>
+  <a href="#about" onclick="document.querySelector('.mobile-menu').classList.remove('open')">За мен</a>
+  <a href="#services" onclick="document.querySelector('.mobile-menu').classList.remove('open')">Услуги</a>
+  <a href="#portfolio" onclick="document.querySelector('.mobile-menu').classList.remove('open')">Проекти</a>
+  <a href="#contact" onclick="document.querySelector('.mobile-menu').classList.remove('open')">Контакт</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Свободен за нови проекти
+    </div>
+    <h1>Вашият бизнес заслужава да изглежда като <em>лидер</em> в своя бранш.</h1>
+    <p class="hero-sub">Създавам модерни уебсайтове, които изграждат доверие, увеличават клиентите и подобряват онлайн присъствието.</p>
+    <div class="hero-btns">
+      <a href="#portfolio" class="btn-primary">Виж проекти →</a>
+      <a href="#contact" class="btn-secondary">Свържи се с мен</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="num">20<span>+</span></div>
+        <div class="label">Завършени проекта</div>
+      </div>
+      <div class="stat-item">
+        <div class="num">100<span>%</span></div>
+        <div class="label">Доволни клиенти</div>
+      </div>
+      <div class="stat-item">
+        <div class="num">3<span>x</span></div>
+        <div class="label">Повече запитвания</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="reveal">
+    <div class="section-tag">За DaGoTa</div>
+    <h2 class="section-title">Дизайн, който работи<br>за вашия бизнес</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-visual reveal">
+      <div class="av-name">Da<span>Go</span>Ta</div>
+      <div class="av-role">Уеб Дизайнер & Разработчик · Илиян Тошев</div>
+      <div class="av-divider"></div>
+      <p class="av-desc">Създавам модерни и ефективни уебсайтове за бизнеси, които искат да изглеждат професионално и да се отличават от конкуренцията. Всеки проект е уникален — проектиран да конвертира посетители в клиенти.</p>
+    </div>
+    <div class="about-points reveal">
+      <div class="about-point">
+        <div class="point-icon">🎯</div>
+        <div>
+          <div class="point-title">Силно онлайн присъствие</div>
+          <div class="point-desc">Сайт, който се показва в Google и привлича правилните клиенти за вашия бизнес.</div>
+        </div>
+      </div>
+      <div class="about-point">
+        <div class="point-icon">🤝</div>
+        <div>
+          <div class="point-title">Доверие чрез дизайн</div>
+          <div class="point-desc">Първото впечатление се случва онлайн — вашият сайт трябва да вдъхва увереност.</div>
+        </div>
+      </div>
+      <div class="about-point">
+        <div class="point-icon">📈</div>
+        <div>
+          <div class="point-title">Бизнес ориентирани решения</div>
+          <div class="point-desc">Не просто красив дизайн — стратегически уебсайт, насочен към растеж и продажби.</div>
+        </div>
+      </div>
+      <div class="about-point">
+        <div class="point-icon">⚡</div>
+        <div>
+          <div class="point-title">Бързо и надеждно</div>
+          <div class="point-desc">Оптимизиран код, бързо зареждане, без технически главоболия за вас.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="reveal">
+    <div class="section-tag">Какво получавате</div>
+    <h2 class="section-title">Всичко необходимо<br>за премиум уеб присъствие</h2>
+    <p class="section-sub">Всяка услуга е включена в проекта — без скрити такси, без изненади.</p>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="sc-icon">✦</div>
+      <div class="sc-title">Уникален премиум дизайн</div>
+      <p class="sc-desc">Персонализиран дизайн, създаден специално за вашия бизнес. Никакви шаблони — само custom визия.</p>
+    </div>
+    <div class="service-card">
+      <div class="sc-icon">📱</div>
+      <div class="sc-title">Mobile-first изработка</div>
+      <p class="sc-desc">Перфектно изглеждащ сайт на всяко устройство — телефон, таблет или десктоп.</p>
+    </div>
+    <div class="service-card">
+      <div class="sc-icon">🔍</div>
+      <div class="sc-title">SEO основи за видимост</div>
+      <p class="sc-desc">Техническо SEO оптимизиране, бързо зареждане и структура, одобрена от Google.</p>
+    </div>
+    <div class="service-card">
+      <div class="sc-icon">⚡</div>
+      <div class="sc-title">Бързо зареждане</div>
+      <p class="sc-desc">Оптимизиран код за максимална скорост. Lighthouse score 90+. Клиентите не чакат.</p>
+    </div>
+    <div class="service-card">
+      <div class="sc-icon">🎯</div>
+      <div class="sc-title">UX/UI за конверсии</div>
+      <p class="sc-desc">Всеки елемент е проектиран да насочва посетителя към действие — обаждане, запитване, покупка.</p>
+    </div>
+    <div class="service-card">
+      <div class="sc-icon">🛠</div>
+      <div class="sc-title">Поддръжка и подобрения</div>
+      <p class="sc-desc">Месечна поддръжка, актуализации и подобрения. Вашият сайт расте с бизнеса ви.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div style="max-width:700px;margin:0 auto;text-align:center;" class="reveal">
+    <div class="section-tag">Как работим заедно</div>
+    <h2 class="section-title">Прост процес,<br>отличен резултат</h2>
+    <p class="section-sub" style="margin:0 auto;">От първия разговор до публикувания сайт — ясен процес без объркване.</p>
+  </div>
+  <div class="process-list reveal">
+    <div class="process-step">
+      <div class="ps-num">01</div>
+      <div>
+        <div class="ps-title">Анализ на бизнеса и целите</div>
+        <p class="ps-desc">Разбирам вашия бизнес, целева аудитория и конкуренция. Дефинираме целите на сайта заедно.</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <div class="ps-num">02</div>
+      <div>
+        <div class="ps-title">UX/UI дизайн концепция</div>
+        <p class="ps-desc">Създавам визуална концепция — структура, цветове, типография. Вие одобрявате преди разработката.</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <div class="ps-num">03</div>
+      <div>
+        <div class="ps-title">Разработка и изграждане</div>
+        <p class="ps-desc">Изграждам сайта с чист, бърз код. Всеки детайл е прецизно изпълнен.</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <div class="ps-num">04</div>
+      <div>
+        <div class="ps-title">Тестове и оптимизация</div>
+        <p class="ps-desc">Тествам на всички устройства и браузъри. Оптимизация за скорост и SEO.</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <div class="ps-num">05</div>
+      <div>
+        <div class="ps-title">Финално публикуване</div>
+        <p class="ps-desc">Сайтът излиза live. Обучавам ви как да го управлявате. Аз остavam на линия за въпроси.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="reveal">
+    <div class="section-tag">Портфолио</div>
+    <h2 class="section-title">Проекти, с които<br>се гордея</h2>
+    <p class="section-sub">Всеки сайт е уникален — проектиран за конкретен бизнес и неговите цели.</p>
+  </div>
+  <div class="portfolio-grid reveal">
+
+    <div class="project-card" style="grid-column:1/-1;border-color:rgba(0,232,122,0.25);background:linear-gradient(135deg,#0d110d,#111811);">
+      <div class="pc-visual" style="background:linear-gradient(135deg,#1a0f08,#2d1a0a);height:220px;position:relative;">
+        <div class="pc-tag" style="background:rgba(0,232,122,0.15);border-color:rgba(0,232,122,0.3);color:#00e87a;">✅ Реален проект</div>
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:1;">
+          <div style="text-align:center;">
+            <div style="font-family:'Bebas Neue',cursive,sans-serif;font-size:clamp(2.5rem,7vw,4rem);color:#fff;letter-spacing:0.05em;line-height:1;text-shadow:0 0 40px rgba(232,65,24,0.4);">ДЮНЕР <span style="color:#e84118">МАСТЪР</span></div>
+            <div style="font-size:0.8rem;color:rgba(255,255,255,0.4);margin-top:6px;letter-spacing:0.1em;text-transform:uppercase;">Панагюрище · Онлайн поръчки</div>
+          </div>
+        </div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(232,65,24,0.1),transparent 70%);pointer-events:none;"></div>
+      </div>
+      <div class="pc-body">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px;">
+          <div class="pc-title" style="margin:0;">Дюнер Мастър</div>
+          <span style="background:rgba(0,232,122,0.12);border:1px solid rgba(0,232,122,0.25);padding:3px 10px;border-radius:100px;font-size:0.72rem;color:#00e87a;font-weight:600;">Завършен</span>
+          <span style="background:rgba(232,65,24,0.12);border:1px solid rgba(232,65,24,0.2);padding:3px 10px;border-radius:100px;font-size:0.72rem;color:#e84118;font-weight:600;">Онлайн поръчки</span>
+        </div>
+        <p class="pc-desc">Пълен сайт за заведение за бързо хранене с онлайн поръчки, количка, избор на час, доставка и известия в Telegram. Mobile-first дизайн.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;">
+          <span style="font-size:0.75rem;color:var(--text2);background:var(--glass);border:1px solid var(--border2);padding:3px 10px;border-radius:6px;">📱 Mobile-first</span>
+          <span style="font-size:0.75rem;color:var(--text2);background:var(--glass);border:1px solid var(--border2);padding:3px 10px;border-radius:6px;">🛒 Количка</span>
+          <span style="font-size:0.75rem;color:var(--text2);background:var(--glass);border:1px solid var(--border2);padding:3px 10px;border-radius:6px;">📲 Telegram известия</span>
+          <span style="font-size:0.75rem;color:var(--text2);background:var(--glass);border:1px solid var(--border2);padding:3px 10px;border-radius:6px;">🛵 Онлайн доставка</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card" style="opacity:0.6;">
+      <div class="pc-visual pv-fitness">
+        <div class="pc-tag">Фитнес</div>
+        <div class="pv-inner">
+          <div class="pvi-bar" style="background:#00e87a;width:70%"></div>
+          <div class="pvi-row" style="background:#00e87a"></div>
+          <div class="pvi-row short" style="background:#00e87a"></div>
+          <div class="pvi-grid">
+            <div class="pvi-block" style="background:#00e87a"></div>
+            <div class="pvi-block" style="background:#00e87a"></div>
+          </div>
+        </div>
+      </div>
+      <div class="pc-body">
+        <div class="pc-title">Фитнес зала</div>
+        <p class="pc-desc">Модерна лендинг страница с онлайн записвания, цени и трансформации.</p>
+        <span style="font-size:0.75rem;color:var(--text2);font-weight:600;letter-spacing:0.05em;">Очаквайте скоро</span>
+      </div>
+    </div>
+
+    <div class="project-card" style="opacity:0.6;">
+      <div class="pc-visual pv-auto">
+        <div class="pc-tag">Автосервиз</div>
+        <div class="pv-inner">
+          <div class="pvi-bar" style="background:#4a9eff;width:65%"></div>
+          <div class="pvi-row" style="background:#4a9eff"></div>
+          <div class="pvi-row short" style="background:#4a9eff"></div>
+          <div class="pvi-grid">
+            <div class="pvi-block" style="background:#4a9eff"></div>
+            <div class="pvi-block" style="background:#4a9eff"></div>
+          </div>
+        </div>
+      </div>
+      <div class="pc-body">
+        <div class="pc-title">Автосервиз</div>
+        <p class="pc-desc">Сайт с услуги, цени и форма за запис на час.</p>
+        <span style="font-size:0.75rem;color:var(--text2);font-weight:600;letter-spacing:0.05em;">Очаквайте скоро</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why">
+  <div class="reveal" style="text-align:center;">
+    <div class="section-tag" style="justify-content:center;">Защо да инвестирате</div>
+    <h2 class="section-title">Сайтът ви е<br>най-добрият продавач</h2>
+  </div>
+  <div class="why-inner reveal">
+    <p class="why-quote">„Първото впечатление определя дали клиентът ще избере теб или конкуренцията. Професионалният сайт не е разход — а <em>инвестиция в доверие и продажби</em>."</p>
+    <div class="stats-row">
+      <div class="stat-block">
+        <div class="sb-num">+70%</div>
+        <div class="sb-label">повече доверие</div>
+        <div class="sb-desc">от посетителите</div>
+      </div>
+      <div class="stat-block">
+        <div class="sb-num">3x</div>
+        <div class="sb-label">повече запитвания</div>
+        <div class="sb-desc">спрямо лош сайт</div>
+      </div>
+      <div class="stat-block">
+        <div class="sb-num">-50%</div>
+        <div class="sb-label">по-нисък bounce rate</div>
+        <div class="sb-desc">клиентите остават</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="reveal">
+    <div class="section-tag">Контакт</div>
+    <h2 class="section-title">Готови да стартираме<br>вашия проект?</h2>
+    <p class="section-sub">Напишете ми и ще се свържа с вас до 24 часа.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <div class="ci-item">
+        <div class="ci-icon">📞</div>
+        <div>
+          <div class="ci-label">Телефон</div>
+          <div class="ci-value">0877 333 624</div>
+        </div>
+      </div>
+      <div class="ci-item">
+        <div class="ci-icon">✉️</div>
+        <div>
+          <div class="ci-label">Имейл</div>
+          <div class="ci-value">info@dagota.bg</div>
+        </div>
+      </div>
+      <div class="ci-item">
+        <div class="ci-icon">📍</div>
+        <div>
+          <div class="ci-label">Локация</div>
+          <div class="ci-value">Панагюрище, България</div>
+        </div>
+      </div>
+      <div class="ci-item">
+        <div class="ci-icon">⏱</div>
+        <div>
+          <div class="ci-label">Отговарям в рамките на</div>
+          <div class="ci-value">24 часа</div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form reveal">
+      <div class="form-group">
+        <label class="form-label">Вашето ime</label>
+        <input type="text" class="form-input" placeholder="Иван Иванов">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Телефон / Имейл</label>
+        <input type="text" class="form-input" placeholder="0888 000 000">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Тип бизнес</label>
+        <input type="text" class="form-input" placeholder="Ресторант, татуист, фризьор...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Съобщение</label>
+        <textarea class="form-textarea" placeholder="Разкажете ми за вашия бизнес и какво търсите..."></textarea>
+      </div>
+      <button class="form-btn">Изпрати запитване →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Da<span>Go</span>Ta</div>
+  <div class="footer-copy">© 2025 DaGoTa · Илиян Тошев · Уеб дизайн Панагюрище</div>
+  <div class="footer-links">
+    <a href="#">Instagram</a>
+    <a href="#">Facebook</a>
+    <a href="#">LinkedIn</a>
+  </div>
+</footer>
+
+<script>
+// Custom cursor
+const cursor=document.getElementById('cursor');
+const trail=document.getElementById('cursorTrail');
+let mx=0,my=0,tx=0,ty=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cursor.style.left=mx+'px';cursor.style.top=my+'px';
+});
+function animTrail(){
+  tx+=(mx-tx)*0.12;ty+=(my-ty)*0.12;
+  trail.style.left=tx+'px';trail.style.top=ty+'px';
+  requestAnimationFrame(animTrail);
+}
+animTrail();
+
+// Navbar scroll
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+  navbar.classList.toggle('scrolled',window.scrollY>50);
+});
+
+// Scroll reveal
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}
+  });
+},{threshold:0.1,rootMargin:'0px 0px -60px 0px'});
+reveals.forEach(r=>obs.observe(r));
+
+// Form submit
+document.querySelector('.form-btn').addEventListener('click',async function(){
+  const inputs=document.querySelectorAll('.form-input,.form-textarea');
+  let valid=true;
+  inputs.forEach(i=>{if(!i.value.trim())valid=false});
+  if(!valid){this.textContent='Попълнете всички полета';setTimeout(()=>this.textContent='Изпрати запитване →',2000);return;}
+  this.textContent='Изпращане...';this.disabled=true;
+  const [name,contact,business,message]=document.querySelectorAll('.form-input,.form-textarea');
+  try{
+    const res=await fetch('https://formspree.io/f/xbdbnled',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({name:name.value,contact:contact.value,business:business.value,message:message.value})
+    });
+    if(res.ok){
+      this.textContent='✓ Изпратено! Ще се свържа скоро.';
+      this.style.background='#00c263';
+      inputs.forEach(i=>i.value='');
+    }else{
+      this.textContent='Грешка — опитай пак';this.disabled=false;
+    }
+  }catch(e){this.textContent='Грешка — опитай пак';this.disabled=false;}
+});
+
+// Counter animation
+function animateCounter(el,target,suffix=''){
+  let start=0;
+  const dur=1500;const startTime=performance.now();
+  function step(now){
+    const p=Math.min((now-startTime)/dur,1);
+    const eased=1-Math.pow(1-p,3);
+    el.textContent=Math.round(start+(target-start)*eased)+suffix;
+    if(p<1)requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+const statObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const nums=e.target.querySelectorAll('.sb-num');
+      nums.forEach(n=>{
+        const txt=n.textContent;
+        if(txt.includes('+70'))animateCounter(n,70,'+%');
+        else if(txt.includes('3x')){}
+        else if(txt.includes('-50'))animateCounter(n,-50,'%');
+      });
+      statObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.5});
+const whySection=document.querySelector('#why');
+if(whySection)statObs.observe(whySection);
+</script>
+</body>
+</html>
